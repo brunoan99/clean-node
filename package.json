@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/brunoan99/clean-node/issues"
   },
-  "homepage": "https://github.com/brunoan99/clean-node#readme"
+  "homepage": "https://github.com/brunoan99/clean-node#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^4.1.3"
+  }
 }
