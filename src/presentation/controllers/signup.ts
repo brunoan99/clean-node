@@ -5,7 +5,7 @@ import { badRequest } from '../helpers/http-helper'
 import { EmailValidator } from '../protocols/email-validator'
 import { InvalidParameterError } from '../errors/invalid-parameter-error'
 export class SignUpController implements Controller {
-  emailValidator: EmailValidator;
+  emailValidator: EmailValidator
 
   constructor (emailValidator: EmailValidator) {
     this.emailValidator = emailValidator
