@@ -4,5 +4,5 @@ import { HttpRequest, HttpResponse } from './http'
 export interface Controller {
   emailValidator: EmailValidator
 
-  handle: (httpRequest: HttpRequest) => HttpResponse
+  handle: (httpRequest: HttpRequest) => Promise<HttpResponse>
 }
