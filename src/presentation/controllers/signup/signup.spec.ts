@@ -57,6 +57,16 @@ const makeAddAccountStub = (): AddAccount => {
   return addAccountStub
 }
 
+const makeAddAccountStubWithError = (): AddAccount => {
+  class AddAccountStub implements AddAccount {
+    add (account: AddAccountModel): AccountModel {
+      throw new Error()
+    }
+  }
+  const addAccountStub = new AddAccountStub()
+  return addAccountStub
+}
+
 describe('SignUp Controller', () => {
   test('Should return 400 if no name is provided', () => {
     const { sut } = makeSut()
@@ -149,6 +159,23 @@ describe('SignUp Controller', () => {
   test('Should return 500 if EmailValidator throws', () => {
     const emailValidatorStub = makeEmailValidatorStubWithError()
     const addAccountStub = makeAddAccountStub()
+    const sut = new SignUpController(emailValidatorStub, addAccountStub)
+    const httpRequest = {
+      body: {
+        email: 'invalid_email@mail.com',
+        name: 'any_name',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test('Should return 500 if AddAccount throws', () => {
+    const emailValidatorStub = makeEmailValidatorStub()
+    const addAccountStub = makeAddAccountStubWithError()
     const sut = new SignUpController(emailValidatorStub, addAccountStub)
     const httpRequest = {
       body: {
