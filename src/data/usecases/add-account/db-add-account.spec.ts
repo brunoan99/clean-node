@@ -1,17 +1,21 @@
-import { Encrypter } from './db-add-account-protocols'
+import { AccountModel, AddAccountModel, Encrypter } from './db-add-account-protocols'
 import { DbAddAccount } from './db-add-account'
+import { AddAccountRepository } from '../../protocols/add-account-repository'
 
 interface SutTypes {
   sut: DbAddAccount
   encrypterStub: Encrypter
+  addAccountRepositoryStub: AddAccountRepository
 }
 
 const makeSut = (): SutTypes => {
   const encrypterStub = makeEncrypterStub()
-  const sut = new DbAddAccount(encrypterStub)
+  const addAccountRepositoryStub = makeAddAccountRepositoryStub()
+  const sut = new DbAddAccount(encrypterStub, addAccountRepositoryStub)
   return {
     sut,
-    encrypterStub
+    encrypterStub,
+    addAccountRepositoryStub
   }
 }
 
@@ -22,6 +26,22 @@ const makeEncrypterStub = (): Encrypter => {
     }
   }
   return new EncrypterStub()
+}
+
+const makeAddAccountRepositoryStub = (): AddAccountRepository => {
+  class AddAccountRepositoryStub implements AddAccountRepository {
+    async add (accountData: AddAccountModel): Promise<AccountModel> {
+      const fakeAccount = {
+        id: 'valid_id',
+        name: 'valid_name',
+        email: 'valid_email@mail.com',
+        password: 'hashed_value'
+
+      }
+      return await new Promise(resolve => resolve(fakeAccount))
+    }
+  }
+  return new AddAccountRepositoryStub()
 }
 
 describe('DbAddAccount Use Case', () => {
@@ -35,6 +55,19 @@ describe('DbAddAccount Use Case', () => {
     }
     await sut.add(accountData)
     expect(encryptSpy).toHaveBeenCalledWith('valid_password')
+  })
+
+  test('Should call AddAccountRepository with correct parameters', async () => {
+    const { sut, addAccountRepositoryStub } = makeSut()
+    const addSpy = jest.spyOn(addAccountRepositoryStub, 'add')
+    const accountData = {
+      name: 'valid_name',
+      email: 'valid_email@mail.com',
+      password: 'valid_password'
+    }
+    await sut.add(accountData)
+    const accountToBeCalled = Object.assign({}, accountData, { password: 'hashed_value' })
+    expect(addSpy).toHaveBeenCalledWith(accountToBeCalled)
   })
 
   test('Should throw if Encrypter throw', async () => {
