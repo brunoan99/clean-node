@@ -36,7 +36,6 @@ const makeAddAccountRepositoryStub = (): AddAccountRepository => {
         name: 'valid_name',
         email: 'valid_email@mail.com',
         password: 'hashed_value'
-
       }
       return await new Promise(resolve => resolve(fakeAccount))
     }
@@ -107,7 +106,6 @@ describe('DbAddAccount Use Case', () => {
       name: 'valid_name',
       email: 'valid_email@mail.com',
       password: 'hashed_value'
-
     })
   })
 })
