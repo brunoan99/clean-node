@@ -1,7 +1,21 @@
 import { Controller, HttpRequest, HttpResponse } from '../../presentation/protocols'
 import { LogControllerDecorator } from './log'
 
-const makeSut = (): any => {
+interface SutTypes {
+  sut: LogControllerDecorator
+  controllerStub: Controller
+}
+
+const makeSut = (): SutTypes => {
+  const controllerStub = makeControllerStub()
+  const sut = new LogControllerDecorator(controllerStub)
+  return {
+    sut,
+    controllerStub
+  }
+}
+
+const makeControllerStub = (): Controller => {
   class ControllerStub implements Controller {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
       const httpResponse = {
@@ -13,12 +27,7 @@ const makeSut = (): any => {
       return await new Promise(resolve => resolve(httpResponse))
     }
   }
-  const controllerStub = new ControllerStub()
-  const sut = new LogControllerDecorator(controllerStub)
-  return {
-    sut,
-    controllerStub
-  }
+  return new ControllerStub()
 }
 
 describe('Log Controller Decorator', () => {
