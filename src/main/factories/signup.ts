@@ -14,7 +14,7 @@ export const makeSignUpController = (): Controller => {
   const emailValidatorAdapter = new EmailValidatorAdapter()
   const signUpController = new SignUpController(emailValidatorAdapter, dbAddAccount)
   const logErrorRepository = {
-    async log (StackError: string): Promise<void> {
+    async logError (StackError: string): Promise<void> {
 
     }
   }
