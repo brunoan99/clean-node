@@ -51,7 +51,7 @@ module.exports = {
   // dependencyExtractor: undefined,
 
   // Make calling deprecated APIs throw helpful error messages
-  // errorOnDeprecated: false,
+  errorOnDeprecated: false,
 
   // The default configuration for fake timers
   // fakeTimers: {
