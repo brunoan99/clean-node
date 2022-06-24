@@ -50,7 +50,7 @@ const makeHashComparerStub = (): HashComparer => {
 const makeTokenGenerator = (): TokenGenerator => {
   class TokenGeneratorStub implements TokenGenerator {
     async generate (id: string): Promise<string> {
-      return 'any_token'
+      return makeFakeToken()
     }
   }
   return new TokenGeneratorStub()
@@ -67,6 +67,8 @@ const makeFakeAuthentication = (): AuthenticationModel => ({
   email: 'any_email@mail.com',
   password: 'any_password'
 })
+
+const makeFakeToken = (): string => 'any_token'
 
 describe('DbAuthentication UseCase', () => {
   test('Should call LoadAccountByEmailRepository with correct email', async () => {
@@ -125,5 +127,11 @@ describe('DbAuthentication UseCase', () => {
     jest.spyOn(tokenGeneratorStub, 'generate').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.auth(makeFakeAuthentication())
     await expect(promise).rejects.toThrow(new Error())
+  })
+
+  test('Should return a token on success', async () => {
+    const { sut } = makeSut()
+    const accessToken = await sut.auth(makeFakeAuthentication())
+    expect(accessToken).toBe(makeFakeToken())
   })
 })
