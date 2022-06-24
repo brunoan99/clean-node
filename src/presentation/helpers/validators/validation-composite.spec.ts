@@ -41,4 +41,9 @@ describe('ValidationComposite', () => {
     jest.spyOn(validationStubs[1], 'validate').mockReturnValueOnce(new Error('second'))
     expect(sut.validate({ any_data: 'any_value' })).toEqual(new Error('first'))
   })
+
+  test('Shoudl return null if validation succeds', () => {
+    const { sut } = makeSut()
+    expect(sut.validate({ any_data: 'any_value' })).toBe(null)
+  })
 })
