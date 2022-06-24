@@ -28,7 +28,8 @@ module.exports = {
     '!<rootDir>/src/presentation/helpers/validators/index.ts',
     '!<rootDir>/src/presentation/controllers/signup/signup-protocols.ts',
     '!<rootDir>/src/presentation/controllers/login/login-protocols.ts',
-    '!<rootDir>/src/data/usecases/add-account/db-add-account-protocols.ts'
+    '!<rootDir>/src/data/usecases/add-account/db-add-account-protocols.ts',
+    '!<rootDir>/src/data/usecases/authentication/db-authentication-protocols.ts'
   ],
 
   // The directory where Jest should output its coverage files
