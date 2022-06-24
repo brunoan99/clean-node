@@ -26,6 +26,7 @@ module.exports = {
     // the above files only contain exports
     '!<rootDir>/src/presentation/protocols/index.ts',
     '!<rootDir>/src/presentation/controllers/signup/signup-protocols.ts',
+    '!<rootDir>/src/presentation/controllers/login/login-protocols.ts',
     '!<rootDir>/src/data/usecases/add-account/db-add-account-protocols.ts'
   ],
 
