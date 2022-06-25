@@ -16,11 +16,11 @@ const makeEmailValidator = (): EmailValidator => {
   return emailValidatorStub
 }
 
-describe('SignUpValidation Factory', () => {
+describe('LoginValidation Factory', () => {
   test('Should call ValidationComposite with all validations', () => {
     sut()
     const validations: Validation[] = []
-    for (const field of ['name', 'email']) {
+    for (const field of ['email', 'password']) {
       validations.push(new RequiredFieldValidation(field))
     }
     validations.push(new EmailValidation('email', makeEmailValidator()))
