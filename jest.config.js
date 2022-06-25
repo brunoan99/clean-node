@@ -14,7 +14,7 @@ module.exports = {
   // cacheDirectory: "/tmp/jest_rs",
 
   // Automatically clear mock calls, instances, contexts and results before every test
-  // clearMocks: false,
+  clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: false,
@@ -22,7 +22,14 @@ module.exports = {
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
-    '!<rootDir>/src/main/**'
+    '!<rootDir>/src/main/**',
+    // the above files only contain exports
+    '!<rootDir>/src/presentation/protocols/index.ts',
+    '!<rootDir>/src/presentation/helpers/validators/index.ts',
+    '!<rootDir>/src/presentation/controllers/signup/signup-controller-protocols.ts',
+    '!<rootDir>/src/presentation/controllers/login/login-controller-protocols.ts',
+    '!<rootDir>/src/data/usecases/add-account/db-add-account-protocols.ts',
+    '!<rootDir>/src/data/usecases/authentication/db-authentication-protocols.ts'
   ],
 
   // The directory where Jest should output its coverage files
@@ -34,7 +41,7 @@ module.exports = {
   ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: 'v8',
+  coverageProvider: 'babel',
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -51,7 +58,7 @@ module.exports = {
   // dependencyExtractor: undefined,
 
   // Make calling deprecated APIs throw helpful error messages
-  // errorOnDeprecated: false,
+  errorOnDeprecated: false,
 
   // The default configuration for fake timers
   // fakeTimers: {
