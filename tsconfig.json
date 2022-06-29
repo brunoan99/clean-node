@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
+    "rootDir": "./src",
     "module": "commonjs",
     "target": "es2019",
     "esModuleInterop": true,
     "allowJs": true
-  }
+  },
+  "exclude": ["coverage", "jest-**-config.js", "jest.config.js", "node_modules"]
 }
