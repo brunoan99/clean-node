@@ -10,13 +10,14 @@ services:
       - "27017:27017"
   api:
     container_name: api-container
-    build: .
-    image: clean-node-api
+    working_dir: /usr/workspace/clean-node-api
+    image: node:16
     restart: always
-    command: npm run debug
+    command: bash -c "npm set-script prepare '' && npm ci --omit=dev && npm run debug"
     volumes:
       - ./dist:/usr/workspace/clean-node-api/dist
       - ./package.json:/usr/workspace/clean-node-api/package.json
+      - ./package-lock.json:/usr/workspace/clean-node-api/package-lock.json
     ports:
       - "5050:5050"
       - "9222:9222"
