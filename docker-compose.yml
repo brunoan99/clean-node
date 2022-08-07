@@ -13,9 +13,9 @@ services:
     working_dir: /usr/workspace/clean-node-api
     image: node:16
     restart: always
-    command: bash -c "npm set-script prepare '' && npm ci --omit=dev && npm run debug"
+    command: bash -c "npm set-script prepare '' && npm ci --omit=dev && npm install nodemon -D && npm run debug"
     volumes:
-      - ./dist:/usr/workspace/clean-node-api/dist
+      - ./dist/:/usr/workspace/clean-node-api/dist
       - ./package.json:/usr/workspace/clean-node-api/package.json
       - ./package-lock.json:/usr/workspace/clean-node-api/package-lock.json
     ports:
